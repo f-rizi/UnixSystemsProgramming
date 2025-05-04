@@ -24,5 +24,8 @@ int main(int argc, char *argv[]) {
         printf("%d:%s\n", i, myargv[i]);
     }
 
+    free(*myargv);
+    free(myargv);
+
     return 0;
 }

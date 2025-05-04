@@ -14,7 +14,7 @@ int makeargv(const char *str, const char *delimiters, char ***argvp) {
     char *strcp;
     *argvp = NULL;
 
-    strnew = str + strcspn(str, delimiters);
+    strnew = str + strspn(str, delimiters);
 
     if ((strcp = malloc(strlen(strnew) + 1)) == NULL) {
         return -1;
@@ -31,7 +31,7 @@ int makeargv(const char *str, const char *delimiters, char ***argvp) {
         }        
     }
 
-    if ((*argvp = malloc(numtokens * sizeof(char *))) == NULL) {
+    if ((*argvp = malloc((numtokens + 1) * sizeof(char *))) == NULL) {
         error = errno;
         free(strcp);
         errno = error;
@@ -40,7 +40,7 @@ int makeargv(const char *str, const char *delimiters, char ***argvp) {
 
     if (numtokens == 0) {
         free(strcp);
-        *(*argvp) = NULL;
+        *(*(argvp) + numtokens) = NULL;
         return 0;
     }
 
