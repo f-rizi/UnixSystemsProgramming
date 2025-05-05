@@ -1,3 +1,24 @@
+/*
+ * This file implements a simple linked list data structure with functions to:
+ * - Add data to the list (`adddata`).
+ * - Access data from the list via traversal key (`getdata`).
+ * - Manage multiple independent traversers using an array of pointers (`travptrs`).
+ * - Maintain a sentinel node (`endlist`) to mark the end of the list during traversal.
+ * - Dynamically allocate and manage memory for list nodes and traversal pointers.
+ * 
+ * Functions:
+ * - `adddata()`: Adds a new node to the end of the list.
+ * - `getdata()`: Retrieves data from the list, advancing the traversal pointer.
+ * - `freekey()`: Frees a traversal pointer at a given index.
+ * - `accessdata()`: Initializes or adds a new traverser for the list.
+ * 
+ * The list supports multiple traversers, each represented by a pointer in `travptrs`, allowing independent traversal of the same list.
+ * The sentinel node `endlist` indicates the end of the list and prevents accessing invalid memory during traversal.
+ * 
+ * **Important**: This implementation is not thread-safe. 
+ * To make it thread-safe, synchronization mechanisms should be added to protect shared resources.
+ */
+
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,9 +32,12 @@ typedef struct list_struct {
 } list_t;
 
 static list_t endlist;
+
 static list_t *headptr = NULL;
 static list_t *tailptr = NULL;
+
 static list_t **travptrs = NULL;
+
 static int travptrs_size = 0;
 
 int accessdata(void) {
