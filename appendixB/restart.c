@@ -25,7 +25,10 @@ ssize_t r_write(int fd, void *buf, size_t size) {
     ssize_t byteswritten = 0;
     size_t totalbytes = 0;
 
-    for (; bytestowrite > 0; bufp += byteswritten, bytestowrite -= byteswritten) {
+    for (; 
+        bytestowrite > 0; 
+        bufp += byteswritten, bytestowrite -= byteswritten) {
+
         byteswritten = write(fd, bufp, bytestowrite);
 
         if (byteswritten == -1 && errno != EINTR) {
@@ -37,6 +40,41 @@ ssize_t r_write(int fd, void *buf, size_t size) {
         }
 
         totalbytes += byteswritten;
+    }
+
+    return totalbytes;
+}
+
+ssize_t readblock(int fd, void *buf, size_t size) {
+    char *bufp = buf;
+    size_t bytestoread = size;
+    ssize_t bytesread = 0;
+    size_t totalbytes;
+
+    for (; 
+        bytestoread > 0; 
+        bufp += bytesread, bytestoread -= bytesread) {
+        
+        bytesread = read(fd, buf, bytestoread);
+
+        if (bytesread == 0 && totalbytes == 0) {
+            return 0;
+        }
+
+        if (bytesread == 0) {
+            errno = EINVAL;
+            return -1;
+        }
+
+        if (bytesread == -1 && errno != EINTR) {
+            return -1;
+        }
+
+        if (bytesread == -1) {
+            bytesread = 0;
+        }
+
+        totalbytes += bytesread;
     }
 
     return totalbytes;
