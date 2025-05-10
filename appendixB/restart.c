@@ -79,3 +79,14 @@ ssize_t readblock(int fd, void *buf, size_t size) {
 
     return totalbytes;
 }
+
+int copyfile(int fromfd, int tofd) {
+    int bytesread;
+    int totalbytes = 0;
+ 
+    while ((bytesread = readwrite(fromfd, tofd)) > 0){
+        totalbytes += bytesread;
+    }
+    
+    return totalbytes;
+ }
