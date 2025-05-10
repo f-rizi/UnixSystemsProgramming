@@ -8,3 +8,4 @@
 #endif
 
 pid_t r_wait(int *stat_loc);
+ssize_t r_read(int fd, void *buf, size_t size);
