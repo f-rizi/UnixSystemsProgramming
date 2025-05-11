@@ -5,16 +5,19 @@
 
 int readline(int fd, char *buf, int nbytes);
 
-int main(void) {
+int main(void)
+{
     char buf[BUFSIZE];
     int num;
 
-    while ((num = readline(STDIN_FILENO, buf, BUFSIZE)) > 0) {
+    while ((num = readline(STDIN_FILENO, buf, BUFSIZE)) > 0)
+    {
         fprintf(stderr, "Number of bytes read: %d\n", num);
         fprintf(stderr, "%.*s", num, buf);
     }
 
-    if (num < 0) {
+    if (num < 0)
+    {
         fprintf(stderr, "readline returned %d\n", num);
         return 1;
     }

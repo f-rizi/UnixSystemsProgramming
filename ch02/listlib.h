@@ -1,6 +1,7 @@
 #include <time.h>
 
-typedef struct data_struct {
+typedef struct data_struct
+{
     time_t time;
     char *string;
 } data_t;
