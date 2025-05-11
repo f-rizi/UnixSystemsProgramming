@@ -1,7 +1,14 @@
+# Ignore object files
+**/*.o
 
-# Ignore all .exe files
-*.exe
-# Ignore files with extension `.class` & `.exe`
-*.class
-*.exe
+# Ignore executables without extensions (common on Linux/Unix)
+**/*
+
+# But don't ignore source files
+!**/*.c
+!**/*.h
+
+# Ignore compiled binaries with known names (optional)
+**/a.out
+**/*.out
 **/*.exe
