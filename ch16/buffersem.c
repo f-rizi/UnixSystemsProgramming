@@ -1,3 +1,6 @@
+// Thread-safe bounded buffer with lazy one-time initialization using pthread_once.
+// Uses mutex and semaphores to coordinate safe producer-consumer access.
+
 #include <errno.h>
 #include <pthread.h>
 #include <semaphore.h>
