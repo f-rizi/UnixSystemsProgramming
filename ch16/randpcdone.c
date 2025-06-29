@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include "buffer.h"
 #include "../ch13/globalerror.h"
-#include "../ch13/sharedsum.h"
+#include "../ch13/doneflag.h"
 
 int initconsumer(pthread_t *tid);
 int initproducer(pthread_t *tid);
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 
     for (i = 0; i < numberproducers; i++)
     {
-        if (error = pthread_join(tidp + i, NULL))
+        if (error = pthread_join(tidp[i], NULL))
         {
             fprintf(stderr, "Failed producer %d join:%s\n", i, strerror(error));
             return 1;
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 
     for (i = 0; i < numberconsumers; i++)
     {
-        if (error = pthread_join(tidc + i, NULL))
+        if (error = pthread_join(tidc[i], NULL))
         {
             fprintf(stderr, "Failed consumer %d join:%s\n", i, strerror(error));
             return 1;
